@@ -21,6 +21,18 @@ class BlogViewSet(ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+    @action(detail=True, methods=["POST"], permission_classes=[permissions.IsAuthenticated])
+    def likes(self, request, pk=None, *args, **kwargs):
+        blog = get_object_or_404(Blog, id=pk)
+        if request.user in blog.likes.all():
+            blog.likes.remove(request.user)
+        else:
+            blog.likes.add(request.user)
+        context = {
+            "likes": blog.likes.count()
+        }
+        return Response(context)
+
     @action(detail=True, methods=["GET"])
     def blog_by_id(self, request, pk=None, *args, **kwargs):
         catalog = get_object_or_404(Catalog, name=pk)
