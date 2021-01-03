@@ -1,0 +1,33 @@
+{
+  "name": "front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development --watch"
+  },
+  "keywords": [],
+  "author": "DmitriySHCH",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "axios": "^0.21.1",
+    "babel-loader": "^8.2.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.0",
+    "webpack-dev-server": "^3.11.1"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
+  }
+}
