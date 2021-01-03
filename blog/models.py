@@ -1,6 +1,7 @@
 from django.db import models
 from catalog.models import Catalog
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Blog(models.Model):
@@ -10,4 +11,4 @@ class Blog(models.Model):
     catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    likes = models.ManyToManyField(User)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL)

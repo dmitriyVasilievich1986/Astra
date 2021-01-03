@@ -21,15 +21,30 @@ class BlogViewSet(ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    @action(detail=True, methods=["POST"], permission_classes=[permissions.IsAuthenticated])
+    @action(detail=True, methods=["GET"])
+    def get_blog_info(self, request, pk, *args, **kwargs):
+        blog = get_object_or_404(Blog, pk=pk)
+        serializer = self.get_serializer(blog, many=False)
+        context = serializer.data
+        context['is_liked'] = request.user in blog.likes.all()
+        return Response(context)
+
+    @action(detail=True, methods=["POST", "GET"], permission_classes=[permissions.IsAuthenticatedOrReadOnly])
     def likes(self, request, pk=None, *args, **kwargs):
         blog = get_object_or_404(Blog, id=pk)
+        if request.method == "GET":
+            context = {
+                "likes": blog.likes.count(),
+                "is_liked": request.user in blog.likes.all()
+            }
+            return Response(context)
         if request.user in blog.likes.all():
             blog.likes.remove(request.user)
         else:
             blog.likes.add(request.user)
         context = {
-            "likes": blog.likes.count()
+            "likes": blog.likes.count(),
+            "is_liked": request.user in blog.likes.all(),
         }
         return Response(context)
 
